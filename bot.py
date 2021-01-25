@@ -6,11 +6,36 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+GUILD = os.getenv('DISCORD_GUILD')
 
+#intents = discord.Intents.default()
+#intents.members = True
+#client = discord.Client(intents=intents)
 client = discord.Client()
 
 @client.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    for guild in client.guilds:
+        print(guild.name)
+        #if guild.name == GUILD:
+            #break
+
+        print(
+            f'\t{client.user} is connected to the following guild:\n'
+            f'\t{guild.name}(id: {guild.id})\n'
+        )
+
+        #members = '\n - '.join([member.name for member in guild.members])
+        #print(f'\tGuild Members:\n \t- {members}')
+        print('\n')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content == '!Hello' or '!hello':
+        response = "Hello There"
+        await message.channel.send(response)
 
 client.run(TOKEN)
