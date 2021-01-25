@@ -5,6 +5,7 @@ import discord
 from dotenv import load_dotenv
 
 import random
+from datetime import datetime
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -25,12 +26,13 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    random.seed(datetime.now())
     lobster = [pic for pic in os.listdir('lobster-pics')]
 
     if message.author == client.user:
         return
 
-    if message.content == '!Hello' or '!hello':
+    if message.content == '!Cheems! Cheems! Give me Cheems!' or '!Cheems' or '!cheems':
         response = "Hello There"
         await message.channel.send(file=discord.File('lobster-pics/' + random.choice(lobster)))
 
