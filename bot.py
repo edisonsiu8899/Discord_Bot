@@ -26,15 +26,16 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    approved_messages = ['!Cheems! Cheems! Give me Cheems!', 'Cheems! Cheems! Give me Cheems!', '!Cheems', '!cheems']
+
     random.seed(datetime.now())
     lobster = [pic for pic in os.listdir('lobster-pics')]
 
     if message.author == client.user:
         return
-
-    if message.content == '!Cheems! Cheems! Give me Cheems!' or '!Cheems' or '!cheems':
-        response = "Hello There"
-        await message.channel.send(file=discord.File('lobster-pics/' + random.choice(lobster)))
+    for i in approved_messages:
+        if message.content == i:
+            await message.channel.send(file=discord.File('lobster-pics/' + random.choice(lobster)))
 
 
 client.run(TOKEN)
